@@ -23,6 +23,7 @@ defmodule FramptonWeb do
 
       import Plug.Conn
       import FramptonWeb.Gettext
+      import Phoenix.LiveView.Controller
       alias FramptonWeb.Router.Helpers, as: Routes
     end
   end
@@ -41,6 +42,10 @@ defmodule FramptonWeb do
 
       import FramptonWeb.ErrorHelpers
       import FramptonWeb.Gettext
+
+      import Phoenix.LiveView,
+        only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
+
       alias FramptonWeb.Router.Helpers, as: Routes
     end
   end
@@ -50,6 +55,7 @@ defmodule FramptonWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

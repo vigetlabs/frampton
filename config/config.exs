@@ -12,7 +12,8 @@ config :frampton, FramptonWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "PUcJ+G6I3DPuH8/3o7+Xs3l5E0QktPfttw3wBBYZbPDs2VZRYZtTffKU6LDDh3AC",
   render_errors: [view: FramptonWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Frampton.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Frampton.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "TOP_SECRET_LOL"]
 
 # Configures Elixir's Logger
 config :logger, :console,
