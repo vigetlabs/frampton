@@ -1,4 +1,4 @@
-defmodule FrmaptonWeb.EditorLiveTest do
+defmodule FramptonWeb.EditorLiveTest do
   use FramptonWeb.ConnCase
   import Phoenix.LiveViewTest
 
