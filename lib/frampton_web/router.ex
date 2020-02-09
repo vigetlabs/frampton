@@ -1,5 +1,6 @@
 defmodule FramptonWeb.Router do
   use FramptonWeb, :router
+  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,6 +18,7 @@ defmodule FramptonWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/editor", EditorLive
   end
 
   # Other scopes may use custom stacks.
