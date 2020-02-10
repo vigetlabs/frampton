@@ -12,4 +12,16 @@ defmodule FramptonWeb.EditorLiveTest do
 
     assert html =~ "editor-container"
   end
+
+  test "when text is entered, it is rendered", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/editor")
+
+    [
+      {"div", _attrs, [
+        {"h1", _rendered_attrs, ["Hello World!"]}
+      ]}
+    ] = render_keydown(view, :render_post, %{"value" => "# Hello World!"})
+      |> Floki.parse_document!
+      |> Floki.find("div.rendered-output")
+  end
 end
