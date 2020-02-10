@@ -37,6 +37,7 @@ defmodule Frampton.MixProject do
       {:phoenix_html, "~> 2.13"},
       {:phoenix_live_view, "~> 0.6"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:floki, "~> 0.25.0", only: :test},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:earmark, "~> 1.4.3"},
