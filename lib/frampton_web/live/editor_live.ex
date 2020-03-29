@@ -1,8 +1,7 @@
 defmodule FramptonWeb.EditorLive do
   use Phoenix.LiveView
+  import Phoenix.HTML, only: [raw: 1]
   alias Frampton.Post
-
-  def render(assigns), do: FramptonWeb.EditorView.render("show.html", assigns)
 
   def mount(_params, _session, socket) do
     post = %Post{}
