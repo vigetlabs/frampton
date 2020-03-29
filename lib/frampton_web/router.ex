@@ -8,22 +8,24 @@ defmodule FramptonWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_live_layout, {FramptonWeb.LayoutView, "app.html"}
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  pipeline :liveviews do
+    plug :put_root_layout, {FramptonWeb.LayoutView, "live.html"}
+  end
+
   scope "/", FramptonWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    live "/editor", EditorLive
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", FramptonWeb do
-  #   pipe_through :api
-  # end
+  scope "/editor", FramptonWeb do
+    pipe_through [:browser, :liveviews]
+    live "/", EditorLive
+  end
 end
