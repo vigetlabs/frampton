@@ -3,18 +3,35 @@ defmodule FramptonWeb.EditorLive do
   import Phoenix.HTML, only: [raw: 1]
   alias Frampton.Post
 
-  def mount(_params, _session, socket) do
-    post = %Post{}
-    {:ok, assign(socket, post: post)}
+  def handle_params(%{"post_id" => post_id}, _uri, socket) do
+    {:noreply, assign_post(socket, post_id)}
+  end
+
+  def handle_params(_params, _uri, socket) do
+    {:ok, post_id} = Post.create
+    path = FramptonWeb.Router.Helpers.live_path(socket, FramptonWeb.EditorLive, post_id)
+    {:noreply, push_patch(socket, to: path)}
   end
 
   def handle_event(
     "render_post",
     %{"value" => raw},
-    %{assigns: %{post: post}} = socket
+    %{assigns: %{post_id: post_id, post: post}} = socket
   ) do
-    {:ok, post} = Post.render(post, raw)
+    {:ok, updated_post} = Post.render(post, raw)
+    Post.update(post_id, updated_post)
 
-    {:noreply, assign(socket, post: post)}
+    {:noreply, assign(socket, post: updated_post)}
+  end
+
+  defp assign_post(socket, post_id) do
+    socket
+    |> assign(post_id: post_id)
+    |> assign_post()
+  end
+
+  defp assign_post(%{assigns: %{post_id: post_id}} = socket) do
+    {:ok, post} = Post.get(post_id)
+    assign(socket, post: post)
   end
 end

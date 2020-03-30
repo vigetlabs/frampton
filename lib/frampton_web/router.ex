@@ -27,5 +27,6 @@ defmodule FramptonWeb.Router do
   scope "/editor", FramptonWeb do
     pipe_through [:browser, :liveviews]
     live "/", EditorLive
+    live "/:post_id", EditorLive
   end
 end
