@@ -9,9 +9,9 @@ defmodule Frampton.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      FramptonWeb.Endpoint
-      # Starts a worker by calling: Frampton.Worker.start_link(arg)
-      # {Frampton.Worker, arg},
+      FramptonWeb.Endpoint,
+      {Registry, keys: :unique, name: Frampton.PostRegistry},
+      {DynamicSupervisor, strategy: :one_for_one, name: Frampton.PostSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

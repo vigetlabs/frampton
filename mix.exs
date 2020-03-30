@@ -38,6 +38,7 @@ defmodule Frampton.MixProject do
       {:phoenix_live_view, "== 0.11.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, "~> 0.25.0", only: :test},
+      {:elixir_uuid, "~> 1.2.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:earmark, "~> 1.4.3"},
