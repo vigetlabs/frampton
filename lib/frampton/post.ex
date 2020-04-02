@@ -18,7 +18,7 @@ defmodule Frampton.Post do
   end
 
   def get(post_id) do
-    {:ok, post} = GenServer.call(via(post_id), :read)
+    GenServer.call(via(post_id), :read)
   end
 
   def update(post_id, %__MODULE{} = updated_post) do
