@@ -4,6 +4,7 @@ defmodule FramptonWeb.EditorLive do
   alias Frampton.Post
 
   def handle_params(%{"post_id" => post_id}, _uri, socket) do
+    :ok = Phoenix.PubSub.subscribe(Frampton.PubSub, post_id)
     {:noreply, assign_post(socket, post_id)}
   end
 
@@ -19,9 +20,14 @@ defmodule FramptonWeb.EditorLive do
     %{assigns: %{post_id: post_id, post: post}} = socket
   ) do
     {:ok, updated_post} = Post.render(post, raw)
+    :ok = Phoenix.PubSub.broadcast(Frampton.PubSub, post_id, :update)
     Post.update(post_id, updated_post)
 
     {:noreply, assign(socket, post: updated_post)}
+  end
+
+  def handle_info(:update, socket) do
+    {:noreply, assign_post(socket)}
   end
 
   defp assign_post(socket, post_id) do
