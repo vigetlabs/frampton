@@ -1,8 +1,8 @@
 <div data-test="editor" class="two-col editor-container">
   <div class="markdown-entry">
-    <textarea phx-keyup="render_post"></textarea>
+    <div contenteditable phx-hook="ContentEditable"><%= @post.body %></div>
   </div>
   <div class="rendered-output">
-    <%= raw(@post.body) %>
+    <%= render_markdown(@post.body) %>
   </div>
 </div>
