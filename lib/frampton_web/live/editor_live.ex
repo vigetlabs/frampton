@@ -3,6 +3,12 @@ defmodule FramptonWeb.EditorLive do
   import Phoenix.HTML, only: [raw: 1]
   alias Frampton.Post
 
+  def render_markdown(markdown) do
+    markdown
+    |> Earmark.as_html!
+    |> raw
+  end
+
   def handle_params(%{"post_id" => post_id}, _uri, socket) do
     :ok = Phoenix.PubSub.subscribe(Frampton.PubSub, post_id)
     {:noreply, assign_post(socket, post_id)}
@@ -19,9 +25,11 @@ defmodule FramptonWeb.EditorLive do
     %{"value" => raw},
     %{assigns: %{post_id: post_id, post: post}} = socket
   ) do
-    {:ok, updated_post} = Post.render(post, raw)
-    :ok = Phoenix.PubSub.broadcast(Frampton.PubSub, post_id, :update)
+    # Todo: merge inputs correctly
+    updated_post = Map.put(post, :body, raw)
+
     Post.update(post_id, updated_post)
+    :ok = Phoenix.PubSub.broadcast(Frampton.PubSub, post_id, :update)
 
     {:noreply, assign(socket, post: updated_post)}
   end
