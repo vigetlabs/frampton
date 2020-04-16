@@ -27,7 +27,7 @@ defmodule Frampton.PostTest do
   describe "update/2" do
     test "with a valid post_id, updates the post" do
       {:ok, id} = Post.create()
-      {:ok, updated_post} = Post.update(id, %{title: "New Title who dis?"})
+      {:ok, updated_post} = Post.update(id, %Post{title: "New Title who dis?"})
 
       assert updated_post.title =~ "New Title"
     end
