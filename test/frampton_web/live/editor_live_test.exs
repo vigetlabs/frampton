@@ -33,4 +33,36 @@ defmodule FramptonWeb.EditorLiveTest do
              |> Floki.find("div.rendered-output")
     assert output == [{"div", [{"class", "rendered-output"}],["\n# Hello World!  "]}]
   end
+
+  test "when two editors are viewing the same post, they see the same rendered output", %{
+    conn: conn, post_id: post_id
+  } do
+    {:ok, view_1, _html_1} = live(conn, "/editor/#{post_id}")
+    render_keydown(view_1, :render_post, %{"value" => "# Hello World!"})
+
+    {:ok, _view_2, html_2} = live(conn, "/editor/#{post_id}")
+    output = html_2
+             |> Floki.parse_document!
+             |> Floki.find("div.rendered-output")
+
+    assert output == [{"div", [{"class", "rendered-output"}],["\n# Hello World!  "]}]
+  end
+
+  test "when two editors are viewing the same post, they see the same raw input", %{
+    conn: conn, post_id: post_id
+  } do
+    {:ok, view_1, _html_1} = live(conn, "/editor/#{post_id}")
+    render_keydown(view_1, :render_post, %{"value" => "# Hello World!"})
+
+    {:ok, _view_2, html_2} = live(conn, "/editor/#{post_id}")
+    input_div = html_2
+             |> Floki.parse_document!
+             |> Floki.find("div.markdown-entry")
+
+    assert input_div == [
+      {"div", [{"class", "markdown-entry"}], [
+        {"textarea", [{"phx-keyup", "render_post"}], ["# Hello World!"]}
+      ]}
+    ]
+  end
 end
