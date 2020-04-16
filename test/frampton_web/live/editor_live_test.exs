@@ -28,12 +28,9 @@ defmodule FramptonWeb.EditorLiveTest do
   } do
     {:ok, view, _html} = live(conn, "/editor/#{post_id}")
 
-    [
-      {"div", _attrs, [
-        {"h1", _rendered_attrs, ["Hello World!"]}
-      ]}
-    ] = render_keydown(view, :render_post, %{"value" => "# Hello World!"})
-      |> Floki.parse_document!
-      |> Floki.find("div.rendered-output")
+    output = render_keydown(view, :render_post, %{"value" => "# Hello World!"})
+             |> Floki.parse_document!
+             |> Floki.find("div.rendered-output")
+    assert output == [{"div", [{"class", "rendered-output"}],["\n# Hello World!  "]}]
   end
 end
