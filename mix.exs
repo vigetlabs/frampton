@@ -42,7 +42,8 @@ defmodule Frampton.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:earmark, "~> 1.4.3"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:ot_server, "~> 0.3.1"}
     ]
   end
 end

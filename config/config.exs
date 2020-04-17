@@ -23,6 +23,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :ot_server,
+  adapter: OT.Server.ETSAdapter,
+  max_retries: 25,
+  ot_types: %{"text" => OT.Text}
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

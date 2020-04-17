@@ -21,9 +21,9 @@ Hooks.ContentEditable = {
     this.el.addEventListener("input", e => {
       this.cursorPos = getCursorPos()
 
+      // cursorPos: this.cursorPos
       this.pushEvent('render_post', {
         value: e.target.innerText,
-        cursorPos: this.cursorPos
       })
     })
   },

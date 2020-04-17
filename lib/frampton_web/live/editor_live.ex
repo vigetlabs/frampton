@@ -27,16 +27,33 @@ defmodule FramptonWeb.EditorLive do
 
   def handle_event(
     "render_post",
-    %{"value" => raw, "cursorPos" => offset},
+    %{"value" => raw},
     %{assigns: %{post_id: post_id, post: post}} = socket
   ) do
-    # Todo: merge inputs correctly
+    ops = difference_to_operations(post.body, raw)
+    require IEx; IEx.pry
+
     updated_post = Map.put(post, :body, raw)
 
     Post.update(post_id, updated_post)
     :ok = Phoenix.PubSub.broadcast(Frampton.PubSub, post_id, :update)
 
     {:noreply, assign(socket, post: updated_post)}
+  end
+
+  # transform the difference between two strings into OT operations
+  def difference_to_operations(s1, s2) do
+    String.myers_difference(s1, s2)
+    |> Enum.map(fn {op, value} ->
+      case op do
+        :eq ->
+          String.length(value)
+        :ins ->
+          %{i: value}
+        :del ->
+          %{d: value}
+      end
+    end) 
   end
 
   def handle_info(:update, socket) do
