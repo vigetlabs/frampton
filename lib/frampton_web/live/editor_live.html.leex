@@ -1,6 +1,12 @@
 <div data-test="editor" class="two-col editor-container">
   <div class="markdown-entry">
-    <div contenteditable phx-hook="ContentEditable"><%= @post.body %></div>
+    <div
+      contenteditable="true"
+      phx-hook="ContentEditable"
+      phx-update="replace"
+    >
+      <%= render_raw(@post) %>
+    </div>
   </div>
   <div class="rendered-output">
     <%= render_markdown(@post.body) %>

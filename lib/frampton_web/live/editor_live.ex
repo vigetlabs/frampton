@@ -3,6 +3,11 @@ defmodule FramptonWeb.EditorLive do
   import Phoenix.HTML, only: [raw: 1]
   alias Frampton.Post
 
+  def render_raw(post) do
+    # require IEx; IEx.pry
+    post.body
+  end
+
   def render_markdown(markdown) do
     markdown
     |> Earmark.as_html!
@@ -22,7 +27,7 @@ defmodule FramptonWeb.EditorLive do
 
   def handle_event(
     "render_post",
-    %{"value" => raw},
+    %{"value" => raw, "cursorPos" => offset},
     %{assigns: %{post_id: post_id, post: post}} = socket
   ) do
     # Todo: merge inputs correctly
