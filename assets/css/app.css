@@ -16,6 +16,7 @@
   background-color: #46a1a9;
   box-sizing: border-box;
 }
+
 .markdown-entry {
   background-color: #e1d5b9;
   width: 100%;
@@ -25,7 +26,7 @@
   border-width: 2px;
 }
 
-.markdown-entry > textarea {
+.markdown-entry > div {
   width: 100%;
   height: 100%;
 }
