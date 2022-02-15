@@ -32,10 +32,10 @@ defmodule Frampton.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.12"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_html, "~> 2.13"},
-      {:phoenix_live_view, "== 0.11.0"},
+      {:phoenix, "~> 1.5.9"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_html, "~> 3.1"},
+      {:phoenix_live_view, "~> 0.17.7"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, "~> 0.25.0", only: :test},
       {:gettext, "~> 0.11"},
